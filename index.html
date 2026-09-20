@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#102A43">
+<meta name="description" content="PHARMA EFFECT — media belajar interaktif tentang faktor yang memengaruhi khasiat obat.">
+<title>PHARMA EFFECT — What Makes a Medicine Work?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --navy:#102A43; --navy-2:#0B1F33; --blue:#2563EB; --cyan:#38BDF8;
+  --white:#F8FAFC; --gray:#E2E8F0; --mist:#EEF3F8;
+  --ink:#102A43; --muted:#486581; --soft:#BCCCDC;
+  --ok:#0F8A5F; --bad:#C63D3D;
+  --font-head:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
+  --font-body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
+  --font-num:'Space Grotesk','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --top:calc(60px + env(safe-area-inset-top,0px));
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font:400 1rem/1.65 var(--font-body);color:var(--ink);background:var(--white);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%{transform:scale(.7);opacity:.55}100%{transform:scale(1.6);opacity:0}}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;border-radius:999px;background:var(--blue);color:#fff;border:0;cursor:pointer;text-decoration:none;font:600 .85rem/1 var(--font-head);letter-spacing:.06em;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:scale(1.04);box-shadow:0 10px 30px -6px rgba(37,99,235,.55);background:#3B74F0}
+.btn.ghost{background:transparent;color:var(--blue);box-shadow:inset 0 0 0 1.5px var(--blue)}
+.btn.ghost:hover{background:var(--blue);color:#fff}
+.btn.on-dark.ghost{color:var(--white);box-shadow:inset 0 0 0 1.5px rgba(248,250,252,.55)}
+.btn.on-dark.ghost:hover{background:var(--white);color:var(--navy)}
+.btn.light{background:var(--white);color:var(--navy)}
+.btn.light:hover{background:#fff;box-shadow:0 10px 30px -6px rgba(56,189,248,.5)}
+.btn.sm{padding:11px 20px;font-size:.78rem}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;height:var(--top);padding:env(safe-area-inset-top,0px) 16px 0 18px;display:flex;align-items:center;justify-content:space-between;background:rgba(16,42,67,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid rgba(248,250,252,.08)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--white);text-decoration:none;font:700 .92rem var(--font-head);letter-spacing:.08em}
+.links{display:flex;gap:2px}
+.links a{padding:9px 14px;border-radius:999px;text-decoration:none;color:var(--soft);font:600 .72rem var(--font-head);letter-spacing:.07em;transition:background .2s,color .2s}
+.links a:hover{color:var(--white)}
+.links a.act{background:rgba(56,189,248,.16);color:var(--cyan)}
+.burger{display:none;width:44px;height:44px;background:none;border:0;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.burger span{display:block;width:22px;height:2px;border-radius:2px;background:var(--white);transition:transform .25s,opacity .25s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:859px){
+  .burger{display:flex}
+  .links{position:absolute;top:100%;left:12px;right:12px;margin-top:8px;flex-direction:column;padding:10px;border-radius:22px;background:rgba(16,42,67,.97);border:1px solid rgba(248,250,252,.1);opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .2s,transform .2s}
+  .links.open{opacity:1;pointer-events:auto;transform:none}
+  .links a{padding:14px 16px;font-size:.8rem}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;padding:calc(var(--top) + 24px) 24px 64px;overflow:hidden;color:var(--white);background:radial-gradient(120% 90% at 50% 0%,#18426F 0%,var(--navy) 55%,var(--navy-2) 100%)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-inner{position:relative;max-width:640px}
+.logo{width:76px;height:76px;margin:0 auto 22px;animation:rise 1s .1s both}
+.hero h1{font:700 clamp(2.6rem,12vw,5.2rem)/1.02 var(--font-head);letter-spacing:.05em;animation:rise .9s .55s both}
+.hero h1 span{display:block}
+.hero h1 span+span{font-weight:400}
+.tagline{margin-top:18px;font:500 clamp(1.05rem,3.8vw,1.45rem) var(--font-head);color:var(--cyan);animation:rise .9s 1.1s both}
+.quote{margin:22px auto 34px;max-width:32ch;color:var(--soft);animation:rise 1s 1.6s both}
+.hero .btn{animation:rise .9s 2.1s backwards}
+
+/* ---------- layout ---------- */
+.sec{padding:88px 20px;scroll-margin-top:var(--top)}
+.sec.mist{background:var(--mist)}
+.wrap{max-width:1040px;margin:0 auto}
+.wrap.narrow{max-width:720px}
+.h2{font:700 clamp(1.7rem,5.6vw,2.6rem)/1.15 var(--font-head);letter-spacing:-.01em}
+.n{font-family:var(--font-num);color:var(--blue)}
+.lead{max-width:60ch;margin-top:14px;color:var(--muted)}
+.center{text-align:center}
+.center .lead{margin-left:auto;margin-right:auto}
+.ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--mist);color:var(--blue)}
+.ic svg,.go svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card{background:#fff;border:1px solid var(--gray);border-radius:26px;padding:24px;box-shadow:0 22px 50px -32px rgba(16,42,67,.4)}
+
+/* ---------- intro ---------- */
+.intro{display:grid;gap:44px}
+@media(min-width:860px){.intro{grid-template-columns:1fr 1fr;align-items:center;gap:64px}}
+.flow{list-style:none;padding:0;display:grid;gap:26px;max-width:340px;margin:0 auto}
+.flow li{position:relative;text-align:center;padding:15px 20px;border-radius:18px;background:#fff;border:1.5px solid var(--gray);font:600 .88rem var(--font-head);letter-spacing:.04em;color:var(--muted);transition:background .5s,color .5s,border-color .5s,transform .5s;transition-delay:calc(var(--i)*.4s)}
+.flow li+li::before{content:"";position:absolute;left:calc(50% - 1px);top:-26px;height:26px;width:2px;background:var(--gray);transition:background .5s;transition-delay:calc(var(--i)*.4s)}
+.flow li+li::after{content:"";position:absolute;left:calc(50% - 4px);top:-9px;width:8px;height:8px;border-right:2px solid var(--gray);border-bottom:2px solid var(--gray);transform:rotate(45deg);transition:border-color .5s;transition-delay:calc(var(--i)*.4s)}
+.flow.on li{background:var(--navy);color:#fff;border-color:var(--navy)}
+.flow.on li:last-child{background:var(--blue);border-color:var(--blue);transform:scale(1.05)}
+.flow.on li+li::before{background:var(--cyan)}
+.flow.on li+li::after{border-color:var(--cyan)}
+.after-flow{margin-top:34px;text-align:center}
+
+/* ---------- 5 factors ---------- */
+.fgrid{display:grid;gap:16px;margin-top:34px}
+@media(min-width:640px){.fgrid{grid-template-columns:repeat(2,1fr)}.fcard:last-child{grid-column:1/-1}}
+@media(min-width:960px){.fgrid{grid-template-columns:repeat(6,1fr)}.fcard{grid-column:span 2}.fcard:nth-child(n+4){grid-column:span 3}}
+.fcard{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:30px;min-height:220px;padding:26px;border-radius:30px;background:#fff;border:1px solid var(--gray);text-decoration:none;transition:transform .25s,box-shadow .25s,border-color .25s}
+.fcard:hover,.fcard:focus-visible{transform:translateY(-6px);border-color:var(--cyan);box-shadow:0 26px 40px -26px rgba(37,99,235,.5)}
+.fnum{font:700 3.3rem/1 var(--font-num);color:transparent;-webkit-text-stroke:1.5px var(--blue)}
+.fcard h3{font:700 1.3rem/1.2 var(--font-head)}
+.fcard p{margin-top:6px;color:var(--muted);font-size:.95rem}
+.go{position:absolute;right:22px;top:24px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--mist);color:var(--blue);transition:background .25s,color .25s}
+.fcard:hover .go{background:var(--blue);color:#fff}
+
+/* ---------- drug factors ---------- */
+.dgrid{display:grid;gap:14px;margin-top:32px}
+@media(min-width:640px){.dgrid{grid-template-columns:repeat(2,1fr)}}
+.dcard{padding:24px;border-radius:20px;background:#fff;border:1px solid var(--gray)}
+.dcard h3{margin:18px 0 6px;font:700 1rem var(--font-head);letter-spacing:.06em}
+.dcard p{color:var(--muted);font-size:.95rem}
+
+/* ---------- patient ---------- */
+.bigquote{margin-top:22px;max-width:22ch;font:600 clamp(1.4rem,4.6vw,2rem)/1.3 var(--font-head);color:var(--navy)}
+.hint{margin-top:14px;font-size:.88rem;color:var(--muted)}
+.patient{display:grid;gap:12px;margin-top:30px}
+.human-wrap{display:grid;place-items:center;order:-1;padding:6px 0 14px}
+.human{width:min(190px,52vw);height:auto;overflow:visible}
+.body-shape{fill:rgba(56,189,248,.08);stroke:var(--blue);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.body-shape path,.body-shape circle{fill:inherit;stroke:inherit}
+.body-shape .open{fill:none}
+.hot{cursor:pointer}
+.hot .dot{fill:var(--blue);transition:fill .25s}
+.hot .halo{fill:var(--cyan);opacity:0;transform-box:fill-box;transform-origin:center}
+.hot.act .dot{fill:var(--cyan);stroke:var(--navy);stroke-width:1.5}
+.hot.act .halo{animation:pulse 1.6s ease-out infinite}
+.pitem{display:block;width:100%;text-align:left;padding:16px 18px;border-radius:18px;background:#fff;border:1.5px solid var(--gray);cursor:pointer;transition:opacity .5s calc(var(--i)*.15s),transform .5s calc(var(--i)*.15s),border-color .2s,box-shadow .2s}
+.js .pitem{opacity:0;transform:translateY(12px)}
+.js .patient.on .pitem{opacity:1;transform:none}
+.pitem h3{font:600 .88rem var(--font-head);letter-spacing:.07em}
+.pitem p{margin-top:4px;color:var(--muted);font-size:.9rem;line-height:1.55}
+.pitem:hover{border-color:var(--cyan)}
+.pitem.act{border-color:var(--blue);box-shadow:0 0 0 4px rgba(37,99,235,.12)}
+@media(min-width:860px){
+  .patient{grid-template-columns:1fr 240px 1fr;gap:18px 30px;align-items:center}
+  .human-wrap{grid-column:2;grid-row:1/span 3;order:0}
+  .p1{grid-column:1;grid-row:1}.p2{grid-column:1;grid-row:2}.p3{grid-column:1;grid-row:3}
+  .p4{grid-column:3;grid-row:1}.p5{grid-column:3;grid-row:2}
+}
+
+/* ---------- food & drink ---------- */
+.fgrid2{display:grid;gap:16px;margin-top:32px}
+@media(min-width:640px){.fgrid2{grid-template-columns:repeat(2,1fr)}}
+.flip{display:block;width:100%;padding:0;border:0;background:none;text-align:left;cursor:pointer;perspective:1000px}
+.flip:focus-visible{outline-offset:5px;border-radius:26px}
+.flip-in{display:grid;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.face{grid-area:1/1;display:flex;flex-direction:column;border-radius:24px;padding:24px;min-height:262px;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.face.front{justify-content:space-between;background:#fff;border:1px solid var(--gray)}
+.face.back{justify-content:center;gap:10px;background:var(--navy);color:var(--white);transform:rotateY(180deg)}
+.face .emo{font-size:2.8rem;line-height:1}
+.face h3{font:700 1.05rem var(--font-head);letter-spacing:.07em}
+.face .tap{font-size:.82rem;color:var(--muted)}
+.face.back p{font-size:.94rem;color:#E6EEF6}
+.face.back h3{color:var(--cyan)}
+.warn{display:flex;gap:14px;margin-top:26px;padding:18px 20px;border-radius:18px;background:#fff;border:1px solid var(--gray);border-left:5px solid var(--cyan);font-size:.94rem;color:var(--muted)}
+.warn b{color:var(--navy);font-family:var(--font-head)}
+
+/* ---------- interaction ---------- */
+.ix{margin-top:36px;padding:26px 20px 30px;border-radius:28px;background:#fff;border:1px solid var(--gray)}
+.stage{position:relative;height:104px;max-width:520px;margin:0 auto}
+.capw{position:absolute;top:8px;width:100px;text-align:center}
+.capw.a{left:0;transition:left 1.4s cubic-bezier(.6,0,.2,1)}
+.capw.b{right:0;transition:right 1.4s cubic-bezier(.6,0,.2,1)}
+.ix.play .capw.a{left:calc(50% - 102px)}
+.ix.play .capw.b{right:calc(50% - 102px)}
+.cap{display:flex;height:40px;border-radius:999px;overflow:hidden;box-shadow:0 8px 18px -8px rgba(16,42,67,.5)}
+.cap i{flex:1}
+.a .cap i:first-child{background:var(--blue)}.a .cap i:last-child{background:#DBEAFE}
+.b .cap i:first-child{background:var(--cyan)}.b .cap i:last-child{background:var(--navy)}
+.lab{display:block;margin-top:10px;font:600 .72rem var(--font-head);letter-spacing:.08em;color:var(--muted)}
+.plus{position:absolute;left:50%;top:14px;transform:translateX(-50%);font:500 1.7rem/1 var(--font-num);color:var(--muted);transition:opacity .4s}
+.ix.play .plus{opacity:0;transition-delay:.9s}
+.burst{position:absolute;left:50%;top:28px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--cyan);opacity:0}
+.ix.play .burst{animation:burst 1s 1.3s ease-out both}
+@keyframes burst{0%{transform:scale(.4);opacity:.9}100%{transform:scale(7);opacity:0}}
+.ixflow{display:grid;justify-items:center;gap:0;margin-top:6px;font:600 .82rem var(--font-head);letter-spacing:.06em}
+.ixflow span{opacity:.3;transition:opacity .6s}
+.ixflow .arr{color:var(--cyan);font-size:1.1rem;line-height:1.5}
+.ix.play .ixflow .s1{opacity:1;transition-delay:1.5s}
+.ix.play .ixflow .s2{opacity:1;transition-delay:2.1s}
+.ixflow .s3{padding:10px 20px;border-radius:999px;background:var(--navy);color:#fff}
+.ixrow{display:flex;justify-content:center;margin-top:18px}
+.res{display:grid;gap:14px;margin-top:26px}
+@media(min-width:760px){.res{grid-template-columns:repeat(3,1fr)}}
+.rcard{display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:20px;background:#fff;border:1px solid var(--gray)}
+.rcard .g{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:700 1.5rem/1 var(--font-num);color:#fff}
+.rcard.up .g{background:var(--blue)}.rcard.down .g{background:var(--navy)}.rcard.chg .g{background:var(--cyan);color:var(--navy)}
+.rcard h3{font:700 .85rem var(--font-head);letter-spacing:.07em}
+.rcard p{margin-top:4px;color:var(--muted);font-size:.92rem}
+
+/* ---------- administration ---------- */
+.tabs{display:inline-flex;flex-wrap:wrap;gap:4px;margin-top:28px;padding:5px;border-radius:999px;background:var(--gray)}
+.tab{padding:11px 22px;border:0;border-radius:999px;background:transparent;cursor:pointer;font:600 .78rem var(--font-head);letter-spacing:.07em;color:var(--muted);transition:background .2s,color .2s}
+.tab[aria-pressed="true"]{background:var(--navy);color:#fff}
+.apanel{margin-top:22px;padding:26px 24px;border-radius:26px;background:#fff;border:1px solid var(--gray);min-height:230px}
+.apanel h3{font:700 1.15rem var(--font-head);letter-spacing:.06em;color:var(--blue)}
+.apanel>p{margin-top:8px;max-width:58ch;color:var(--muted)}
+.route{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:22px}
+.rp{padding:9px 16px;border-radius:999px;background:var(--mist);border:1px solid var(--gray);font-size:.86rem;animation:rise .5s calc(var(--i)*.35s) both}
+.rp.end{background:var(--blue);border-color:var(--blue);color:#fff}
+.ra{color:var(--cyan);font-weight:700;animation:rise .4s calc(var(--i)*.35s + .2s) both}
+.matters{margin-top:34px;font:700 clamp(1.6rem,6vw,2.4rem) var(--font-head);color:var(--navy)}
+
+/* ---------- drug journey ---------- */
+.journey{background:linear-gradient(180deg,var(--navy-2),var(--navy));color:var(--white)}
+.journey .lead{color:var(--soft)}
+.track{overflow-x:auto;margin:38px -20px 0;padding:6px 20px 10px;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.rail{position:relative;display:grid;grid-template-columns:repeat(6,minmax(106px,1fr));min-width:640px;--p:0}
+.rail::before{content:"";position:absolute;top:29px;left:calc(100%/12);right:calc(100%/12);height:2px;background:rgba(248,250,252,.16)}
+.fill{position:absolute;top:29px;left:calc(100%/12);height:2px;width:calc((100% - 100%/6)*var(--p));background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .8s cubic-bezier(.4,0,.2,1)}
+.fill::after{content:"";position:absolute;right:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 5px rgba(56,189,248,.25),0 0 16px var(--cyan)}
+.st{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 4px;background:none;border:0;cursor:pointer}
+.st .c{width:46px;height:46px;margin-top:7px;border-radius:50%;display:grid;place-items:center;background:var(--navy);border:2px solid rgba(248,250,252,.28);font:700 1rem var(--font-num);transition:background .3s,color .3s,border-color .3s,transform .3s,box-shadow .3s}
+.st .l{font:600 .78rem var(--font-head);letter-spacing:.03em;color:var(--soft)}
+.st.done .c{border-color:var(--cyan);color:var(--cyan)}
+.st.act .c{background:var(--cyan);border-color:var(--cyan);color:var(--navy);transform:scale(1.14);box-shadow:0 0 0 6px rgba(56,189,248,.22),0 0 26px rgba(56,189,248,.55)}
+.st.act .l{color:#fff}
+.jdetail{margin-top:26px;padding:24px;min-height:170px;border-radius:26px;background:rgba(248,250,252,.06);border:1px solid rgba(248,250,252,.14);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.jd{animation:rise .45s both}
+.jd h3{font:700 1.4rem var(--font-head)}
+.jd p{margin-top:8px;max-width:58ch;color:#E6EEF6}
+.jd .rel{margin-top:14px;font-size:.88rem;color:var(--cyan)}
+.jctl{margin-top:20px}
+
+/* ---------- case lab & quiz ---------- */
+.chead,.qtop{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cnum,.qn{font:700 .95rem var(--font-num);letter-spacing:.1em;color:var(--blue)}
+.cdots{display:flex;gap:6px}
+.cdots i{width:9px;height:9px;border-radius:50%;background:var(--gray)}
+.cdots i.done{background:var(--cyan)}.cdots i.act{background:var(--blue);transform:scale(1.25)}
+.ctext{margin-top:18px;font-size:1.05rem}
+.cq{margin-top:14px;font:600 1.05rem/1.4 var(--font-head)}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:14px 16px;border:1.5px solid var(--gray);border-radius:16px;background:#fff;cursor:pointer;transition:border-color .2s,background .2s}
+.opt .k{flex:none;min-width:1.5em;font:700 1rem var(--font-num);color:var(--blue)}
+.opt .mk{margin-left:auto;font-weight:700}
+.opt:hover:not([disabled]){border-color:var(--cyan)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:#E5F6EE}
+.opt.right .mk{color:var(--ok)}
+.opt.wrong{border-color:var(--bad);background:#FCEBEB}
+.opt.wrong .mk{color:var(--bad)}
+.case .opt{animation:rise .5s calc(var(--i)*.12s) both}
+.fb{margin-top:16px;padding:16px 18px;border-radius:16px;background:var(--mist);animation:rise .4s both}
+.fb strong{display:block;margin-bottom:4px;font:700 1rem var(--font-head)}
+.fb.good strong{color:var(--ok)}.fb.bad strong{color:var(--bad)}
+.fb p{color:var(--muted);font-size:.94rem}
+.fb .btn{margin-top:14px}
+.qbox{scroll-margin-top:calc(var(--top) + 12px)}
+.bar{height:8px;margin:14px 0 22px;border-radius:99px;background:var(--gray);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .6s cubic-bezier(.4,0,.2,1)}
+.qscore{font-size:.85rem;color:var(--muted)}
+.qscore b{font-family:var(--font-num);color:var(--navy)}
+.qq{font:600 1.15rem/1.4 var(--font-head)}
+.qstart,.qend{text-align:center;padding:14px 0}
+.qstart p{margin-bottom:22px;color:var(--muted)}
+.qlabel{font:600 .8rem var(--font-head);letter-spacing:.14em;color:var(--muted)}
+.big{margin:6px 0;font:700 clamp(4.2rem,20vw,6.8rem)/1 var(--font-num);color:var(--blue)}
+.big small{font-size:.38em;color:var(--muted);font-weight:500}
+.qmsg{margin:6px 0 24px;font:600 1.1rem var(--font-head)}
+
+/* ---------- recap ---------- */
+.chain{display:flex;flex-direction:column;margin:38px auto 0;width:max-content;max-width:100%}
+.node{position:relative;display:flex;align-items:center;gap:16px}
+.node+.node{margin-top:30px}
+.node+.node::before{content:"";position:absolute;left:29px;top:-30px;height:30px;width:2px;background:var(--cyan)}
+.node .cir{position:relative;z-index:1;flex:none;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:var(--cyan)}
+.node:last-child .cir{background:var(--blue);color:#fff}
+.node .cir svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.node span.t{font:600 .88rem var(--font-head);letter-spacing:.07em}
+@media(min-width:860px){
+  .chain{flex-direction:row;width:auto;justify-content:center}
+  .node{flex-direction:column;text-align:center;width:160px;gap:12px}
+  .node+.node{margin:0}
+  .node+.node::before{left:-50%;top:29px;width:100%;height:2px}
+}
+.final{margin-top:44px;text-align:center}
+.final .en{font:700 clamp(1.4rem,5vw,2.1rem)/1.25 var(--font-head);max-width:24ch;margin:0 auto}
+.final .id{margin-top:12px;color:var(--muted)}
+
+/* ---------- references ---------- */
+.refs{display:grid;gap:14px;margin-top:32px}
+@media(min-width:860px){.refs{grid-template-columns:repeat(3,1fr)}}
+.rg{padding:24px;border-radius:22px;background:#fff;border:1px solid var(--gray)}
+.rg h3{font:700 .9rem var(--font-head);letter-spacing:.1em;color:var(--blue)}
+.rg ul{list-style:none;padding:0;margin-top:14px;display:grid;gap:14px}
+.rg li{display:flex;gap:10px;font-size:.92rem;color:var(--muted)}
+.rg li em{color:var(--ink)}
+
+/* ---------- closing ---------- */
+.closing{position:relative;overflow:hidden;text-align:center;color:var(--white);padding:110px 24px calc(56px + env(safe-area-inset-bottom,0px));background:radial-gradient(120% 90% at 50% 100%,#18426F 0%,var(--navy) 55%,var(--navy-2) 100%)}
+.closing canvas{position:absolute;inset:0;width:100%;height:100%}
+.closing .in{position:relative;max-width:620px;margin:0 auto}
+.closing h2{font:700 clamp(2.4rem,11vw,4.6rem)/1 var(--font-head);letter-spacing:.03em}
+.closing .t1{margin-top:22px;color:var(--soft)}
+.closing .t2{margin:6px 0 34px;font:600 1.1rem var(--font-head);color:var(--cyan)}
+.sign{margin-top:70px}
+.sign b{display:block;font:700 1rem var(--font-head);letter-spacing:.14em}
+.sign span{display:block;margin-top:4px;font-size:.88rem;color:var(--soft)}
+.disc{margin-top:22px;font-size:.78rem;color:var(--soft);opacity:.8}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <a class="brand" href="#home" aria-label="PHARMA EFFECT, kembali ke atas">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none" stroke="#38BDF8" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M32 6 54 19v26L32 58 10 45V19z"/><circle cx="32" cy="32" r="6" fill="#38BDF8" stroke="none"/><path d="M32 26V6M37 35l17 10M27 35 10 45"/></svg>
+    PHARMA EFFECT
+  </a>
+  <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+  <nav class="links" id="links" aria-label="Navigasi utama">
+    <a href="#home">HOME</a>
+    <a href="#intro">EXPLORE</a>
+    <a href="#journey">DRUG JOURNEY</a>
+    <a href="#case">CASE LAB</a>
+    <a href="#quiz">QUIZ</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ 01 LANDING ============ -->
+<section id="home" class="hero">
+  <canvas data-p aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <svg class="logo" viewBox="0 0 64 64" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M32 6 54 19v26L32 58 10 45V19z"/><circle cx="32" cy="32" r="6" fill="#38BDF8" stroke="none"/><path d="M32 26V6M37 35l17 10M27 35 10 45"/></svg>
+    <h1><span>PHARMA</span><span>EFFECT</span></h1>
+    <p class="tagline">What Makes a Medicine Work?</p>
+    <p class="quote">“Obat yang sama belum tentu memberikan efek yang sama pada setiap orang.”</p>
+    <a class="btn" href="#intro">EXPLORE PHARMA EFFECT <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<!-- ============ 02 INTRODUCTION ============ -->
+<section id="intro" class="sec">
+  <div class="wrap intro">
+    <div>
+      <h2 class="h2">Why Does Drug Effect Vary?</h2>
+      <p class="lead">Khasiat obat tidak hanya ditentukan oleh jenis obat yang digunakan. Efek yang dihasilkan dapat dipengaruhi oleh berbagai faktor, mulai dari karakteristik obat, kondisi individu, cara pemberian, makanan dan minuman, hingga interaksi dengan obat atau zat lainnya.</p>
+    </div>
+    <div>
+      <ol class="flow" id="flow">
+        <li style="--i:0">OBAT</li>
+        <li style="--i:1">MASUK KE DALAM TUBUH</li>
+        <li style="--i:2">DIPROSES</li>
+        <li style="--i:3">MENCAPAI TARGET</li>
+        <li style="--i:4">MENGHASILKAN EFEK</li>
+      </ol>
+    </div>
+  </div>
+  <div class="wrap after-flow"><a class="btn ghost" href="#factors">Explore the factors behind it.</a></div>
+</section>
+
+<!-- ============ 03 THE 5 FACTORS ============ -->
+<section id="factors" class="sec mist">
+  <div class="wrap">
+    <h2 class="h2">5 Factors That Influence Drug Effect</h2>
+    <p class="lead">Ketuk salah satu kartu untuk mempelajarinya.</p>
+    <div class="fgrid">
+      <a class="fcard" href="#drug"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span><span class="fnum">01</span><span><h3>Drug Factors</h3><p>Faktor yang berasal dari obat.</p></span></a>
+      <a class="fcard" href="#patient"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span><span class="fnum">02</span><span><h3>Patient Factors</h3><p>Faktor yang berasal dari individu.</p></span></a>
+      <a class="fcard" href="#food"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span><span class="fnum">03</span><span><h3>Food &amp; Drink</h3><p>Pengaruh makanan dan minuman.</p></span></a>
+      <a class="fcard" href="#interaction"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span><span class="fnum">04</span><span><h3>Drug Interactions</h3><p>Interaksi obat dengan obat atau zat lain.</p></span></a>
+      <a class="fcard" href="#admin"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span><span class="fnum">05</span><span><h3>Drug Administration</h3><p>Cara dan waktu penggunaan obat.</p></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 DRUG FACTORS ============ -->
+<section id="drug" class="sec">
+  <div class="wrap">
+    <h2 class="h2"><span class="n">01</span> | Drug Factors</h2>
+    <p class="lead">Karakteristik obat dapat menentukan seberapa cepat, seberapa banyak, dan seberapa lama obat memberikan efek di dalam tubuh.</p>
+    <div class="dgrid">
+      <div class="dcard"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.2 6 10.5A6 6 0 0 1 6 13.5C6 9.2 12 3 12 3z"/></svg></span><h3>DOSIS</h3><p>Jumlah obat yang diberikan dapat memengaruhi intensitas efek obat.</p></div>
+      <div class="dcard"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></span><h3>BENTUK SEDIAAN</h3><p>Tablet, kapsul, sirup, injeksi, dan bentuk lainnya dapat memiliki karakteristik pelepasan dan penyerapan yang berbeda.</p></div>
+      <div class="dcard"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 15h9"/></svg></span><h3>SIFAT FISIKOKIMIA</h3><p>Kelarutan, ukuran partikel, dan sifat kimia obat dapat memengaruhi proses obat di dalam tubuh.</p></div>
+      <div class="dcard"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6L12 3z"/><path d="m9 12 2 2 4-4"/></svg></span><h3>STABILITAS</h3><p>Stabilitas obat dapat memengaruhi kualitas dan efektivitasnya.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 PATIENT FACTORS ============ -->
+<section id="patient" class="sec mist">
+  <div class="wrap">
+    <h2 class="h2"><span class="n">02</span> | Patient Factors</h2>
+    <p class="bigquote">“One drug, different bodies, different responses.”</p>
+    <p class="hint">Ketuk salah satu faktor untuk melihat titik terkait pada tubuh.</p>
+    <div class="patient" id="patient-grid">
+      <div class="human-wrap">
+        <svg class="human" viewBox="0 0 200 350" role="img" aria-label="Ilustrasi tubuh manusia dengan lima titik faktor pasien">
+          <g class="body-shape">
+            <circle cx="100" cy="42" r="26"/>
+            <path class="open" d="M90 66v14h20V66"/>
+            <path d="M62 88Q100 76 138 88L146 204Q100 216 54 204Z"/>
+            <path class="open" d="M62 90 40 196M138 90l22 106"/>
+            <path d="M72 206 66 338h26l8-98 8 98h26l-6-132"/>
+          </g>
+          <g class="hot" data-k="age"><circle class="halo" cx="100" cy="42" r="12"/><circle class="dot" cx="100" cy="42" r="6"/></g>
+          <g class="hot" data-k="health"><circle class="halo" cx="113" cy="112" r="12"/><circle class="dot" cx="113" cy="112" r="6"/></g>
+          <g class="hot" data-k="organ"><circle class="halo" cx="84" cy="136" r="12"/><circle class="dot" cx="84" cy="136" r="6"/></g>
+          <g class="hot" data-k="weight"><circle class="halo" cx="100" cy="182" r="12"/><circle class="dot" cx="100" cy="182" r="6"/></g>
+          <g class="hot" data-k="genetic"><circle class="halo" cx="84" cy="268" r="12"/><circle class="dot" cx="84" cy="268" r="6"/></g>
+        </svg>
+      </div>
+      <button class="pitem p1" data-k="age" style="--i:0"><h3>AGE</h3><p>Usia dapat memengaruhi proses farmakokinetik obat.</p></button>
+      <button class="pitem p2" data-k="weight" style="--i:1"><h3>BODY WEIGHT</h3><p>Berat badan dapat menjadi salah satu pertimbangan dalam penggunaan dosis obat tertentu.</p></button>
+      <button class="pitem p3" data-k="organ" style="--i:2"><h3>ORGAN FUNCTION</h3><p>Fungsi hati dan ginjal berperan dalam metabolisme dan eliminasi obat.</p></button>
+      <button class="pitem p4" data-k="health" style="--i:3"><h3>HEALTH CONDITION</h3><p>Kondisi penyakit tertentu dapat memengaruhi respons terhadap obat.</p></button>
+      <button class="pitem p5" data-k="genetic" style="--i:4"><h3>GENETIC FACTORS</h3><p>Perbedaan genetik tertentu dapat menyebabkan variasi respons terhadap obat.</p></button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 FOOD & DRINK ============ -->
+<section id="food" class="sec">
+  <div class="wrap">
+    <h2 class="h2"><span class="n">03</span> | Food &amp; Drink</h2>
+    <p class="lead">Apa yang kita konsumsi dapat memengaruhi perjalanan obat di dalam tubuh. Makanan dan minuman tertentu dapat memengaruhi penyerapan, metabolisme, atau efek obat.</p>
+    <p class="hint">Ketuk kartu untuk membalik dan membaca informasinya.</p>
+    <div class="fgrid2">
+      <button class="flip" aria-pressed="false"><span class="flip-in">
+        <span class="face front"><span class="emo" aria-hidden="true">🍊</span><span><h3>FRUIT / JUICE</h3><span class="tap">Ketuk untuk membuka</span></span></span>
+        <span class="face back"><h3>FRUIT / JUICE</h3><p>Jus grapefruit (jeruk bali) dapat menghambat enzim CYP3A4 di usus, sehingga kadar beberapa obat dalam darah bisa meningkat. Jus tertentu juga dapat mengurangi penyerapan beberapa obat.</p></span>
+      </span></button>
+      <button class="flip" aria-pressed="false"><span class="flip-in">
+        <span class="face front"><span class="emo" aria-hidden="true">☕</span><span><h3>CAFFEINE</h3><span class="tap">Ketuk untuk membuka</span></span></span>
+        <span class="face back"><h3>CAFFEINE</h3><p>Kafein bersifat stimulan sehingga dapat menambah efek obat tertentu yang juga merangsang sistem saraf pusat atau jantung. Kafein juga dapat berinteraksi dengan obat yang dimetabolisme melalui jalur enzim yang sama.</p></span>
+      </span></button>
+      <button class="flip" aria-pressed="false"><span class="flip-in">
+        <span class="face front"><span class="emo" aria-hidden="true">🥛</span><span><h3>MILK &amp; DAIRY</h3><span class="tap">Ketuk untuk membuka</span></span></span>
+        <span class="face back"><h3>MILK &amp; DAIRY</h3><p>Kalsium dalam susu dan produk olahannya dapat berikatan dengan obat tertentu, misalnya tetrasiklin dan fluorokuinolon, sehingga penyerapannya menurun.</p></span>
+      </span></button>
+      <button class="flip" aria-pressed="false"><span class="flip-in">
+        <span class="face front"><span class="emo" aria-hidden="true">🍽️</span><span><h3>FOOD</h3><span class="tap">Ketuk untuk membuka</span></span></span>
+        <span class="face back"><h3>FOOD</h3><p>Makanan dapat memperlambat, mengurangi, atau pada obat tertentu meningkatkan penyerapan. Karena itu, ada obat yang diminum saat perut kosong, ada pula yang bersama atau sesudah makan.</p></span>
+      </span></button>
+    </div>
+    <div class="warn"><span aria-hidden="true">⚠️</span><p><b>Important:</b> Pengaruh makanan terhadap obat tidak selalu sama. Karena itu, aturan penggunaan obat perlu mengikuti petunjuk tenaga kesehatan atau informasi obat yang diberikan.</p></div>
+  </div>
+</section>
+
+<!-- ============ 07 DRUG INTERACTION ============ -->
+<section id="interaction" class="sec mist">
+  <div class="wrap">
+    <h2 class="h2"><span class="n">04</span> | Drug Interactions</h2>
+    <p class="lead">Interaksi obat terjadi ketika efek suatu obat dipengaruhi oleh obat, makanan, minuman, atau zat lain. Interaksi dapat menyebabkan efek obat meningkat, menurun, atau berubah.</p>
+    <div class="ix" id="ix">
+      <div class="stage" aria-hidden="true">
+        <div class="capw a"><div class="cap"><i></i><i></i></div><span class="lab">DRUG A</span></div>
+        <div class="plus">+</div>
+        <div class="capw b"><div class="cap"><i></i><i></i></div><span class="lab">DRUG B</span></div>
+        <div class="burst"></div>
+      </div>
+      <div class="ixflow">
+        <span class="arr" style="opacity:1">↓</span>
+        <span class="s1">INTERACTION</span>
+        <span class="arr" style="opacity:1">↓</span>
+        <span class="s3 s2">Drug Effect Changes</span>
+      </div>
+      <div class="ixrow"><button class="btn ghost sm" id="replay">Replay ↻</button></div>
+    </div>
+    <div class="res">
+      <div class="rcard up"><span class="g" aria-hidden="true">↑</span><div><h3>INCREASED EFFECT</h3><p>Efek obat dapat menjadi lebih kuat.</p></div></div>
+      <div class="rcard down"><span class="g" aria-hidden="true">↓</span><div><h3>DECREASED EFFECT</h3><p>Efek obat dapat menjadi lebih lemah.</p></div></div>
+      <div class="rcard chg"><span class="g" aria-hidden="true">↔</span><div><h3>CHANGED RESPONSE</h3><p>Respons tubuh terhadap obat dapat berubah.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 DRUG ADMINISTRATION ============ -->
+<section id="admin" class="sec">
+  <div class="wrap">
+    <h2 class="h2"><span class="n">05</span> | How the Drug Is Given</h2>
+    <div class="tabs" role="group" aria-label="Pilih rute pemberian obat">
+      <button class="tab" data-k="oral" aria-pressed="true">ORAL</button>
+      <button class="tab" data-k="injection" aria-pressed="false">INJECTION</button>
+      <button class="tab" data-k="topical" aria-pressed="false">TOPICAL</button>
+    </div>
+    <div class="apanel" id="apanel" aria-live="polite"></div>
+    <p class="matters">Route matters.</p>
+  </div>
+</section>
+
+<!-- ============ 09 DRUG JOURNEY ============ -->
+<section id="journey" class="sec journey">
+  <div class="wrap">
+    <h2 class="h2">THE DRUG JOURNEY</h2>
+    <p class="lead">Follow the medicine from administration to elimination.</p>
+    <div class="track" id="track">
+      <div class="rail" id="rail"><div class="fill"></div></div>
+    </div>
+    <div class="jdetail" id="jdetail" aria-live="polite"></div>
+    <div class="jctl"><button class="btn ghost on-dark sm" id="jplay">Play journey ▶</button></div>
+  </div>
+</section>
+
+<!-- ============ 10 CASE LAB ============ -->
+<section id="case" class="sec">
+  <div class="wrap narrow case">
+    <h2 class="h2">CASE LAB</h2>
+    <p class="lead">Can you identify the factor?</p>
+    <div class="card qbox" id="case-box" style="margin-top:28px"></div>
+  </div>
+</section>
+
+<!-- ============ 11 QUIZ ============ -->
+<section id="quiz" class="sec mist">
+  <div class="wrap narrow">
+    <h2 class="h2">TEST YOUR KNOWLEDGE</h2>
+    <p class="lead">10 questions. One mission: understand the drug effect.</p>
+    <div class="card qbox" id="quiz-box" style="margin-top:28px"></div>
+  </div>
+</section>
+
+<!-- ============ 12 RECAP ============ -->
+<section id="recap" class="sec">
+  <div class="wrap center">
+    <h2 class="h2">LET'S RECAP</h2>
+    <div class="chain">
+      <div class="node"><span class="cir"><svg viewBox="0 0 24 24"><rect x="2.5" y="8" width="19" height="8" rx="4" transform="rotate(-40 12 12)"/><path d="M12 8v8" transform="rotate(-40 12 12)"/></svg></span><span class="t">DRUG</span></div>
+      <div class="node"><span class="cir"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg></span><span class="t">PATIENT</span></div>
+      <div class="node"><span class="cir"><svg viewBox="0 0 24 24"><path d="M5 9h11v4a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5V9z"/><path d="M16 10h2a2.5 2.5 0 0 1 0 5h-2M8 4v2M12 4v2"/></svg></span><span class="t">FOOD &amp; DRINK</span></div>
+      <div class="node"><span class="cir"><svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg></span><span class="t">INTERACTION</span></div>
+      <div class="node"><span class="cir"><svg viewBox="0 0 24 24"><path d="M4 12h11M11 7l5 5-5 5M20 5v14"/></svg></span><span class="t">ADMINISTRATION</span></div>
+    </div>
+    <div class="final">
+      <p class="en">Drug efficacy is not determined by one factor alone.</p>
+      <p class="id">Khasiat obat dipengaruhi oleh berbagai faktor yang saling berkaitan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13 REFERENCES ============ -->
+<!-- CATATAN: ganti isi daftar ini dengan sumber yang benar-benar kalian pakai. -->
+<section id="refs" class="sec mist">
+  <div class="wrap">
+    <h2 class="h2">LEARN MORE</h2>
+    <div class="refs">
+      <div class="rg"><h3>BOOKS</h3><ul>
+        <li><span>📖</span><span>Katzung BG. [tahun edisi]. <em>Basic &amp; Clinical Pharmacology</em>. McGraw-Hill.</span></li>
+        <li><span>📖</span><span>Brunton LL, Knollmann BC. [tahun edisi]. <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>. McGraw-Hill.</span></li>
+        <li><span>📖</span><span>Rang HP, Ritter JM, Flower RJ, Henderson G. [tahun edisi]. <em>Rang &amp; Dale's Pharmacology</em>. Elsevier.</span></li>
+      </ul></div>
+      <div class="rg"><h3>JOURNALS</h3><ul>
+        <li><span>📄</span><span>[Nama penulis]. [Tahun]. [Judul artikel]. <em>[Nama jurnal]</em>.</span></li>
+        <li><span>📄</span><span>[Nama penulis]. [Tahun]. [Judul artikel]. <em>[Nama jurnal]</em>.</span></li>
+      </ul></div>
+      <div class="rg"><h3>OFFICIAL SOURCES</h3><ul>
+        <li><span>🌐</span><span>World Health Organization (WHO).</span></li>
+        <li><span>🌐</span><span>Badan Pengawas Obat dan Makanan (BPOM) RI.</span></li>
+        <li><span>🌐</span><span>Kementerian Kesehatan Republik Indonesia.</span></li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14 CLOSING ============ -->
+<section id="closing" class="closing">
+  <canvas data-p aria-hidden="true"></canvas>
+  <div class="in">
+    <h2>NOW YOU KNOW.</h2>
+    <p class="t1">A drug doesn't simply enter the body and work.</p>
+    <p class="t2">Its effect is influenced by a journey of factors.</p>
+    <a class="btn light" href="#home">EXPLORE AGAIN ↻</a>
+    <div class="sign"><b>PHARMA EFFECT</b><span>Understanding the Factors Behind Drug Efficacy</span></div>
+    <p class="disc">Media ini hanya untuk pembelajaran dan tidak menggantikan saran tenaga kesehatan.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var pad=function(n){return String(n).padStart(2,'0')};
+var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var behavior=reduce?'auto':'smooth';
+
+/* ---------- nav ---------- */
+var burger=$('#burger'), links=$('#links');
+function closeMenu(){links.classList.remove('open');burger.setAttribute('aria-expanded','false')}
+burger.addEventListener('click',function(){
+  var o=links.classList.toggle('open');
+  burger.setAttribute('aria-expanded',String(o));
+});
+$$('#links a').forEach(function(a){a.addEventListener('click',closeMenu)});
+
+var spy=$$('#links a').map(function(a){return {a:a,el:$(a.getAttribute('href'))}});
+var recapEl=$('#recap'), ticking=false;
+function onScroll(){
+  if(ticking)return; ticking=true;
+  requestAnimationFrame(function(){
+    ticking=false;
+    var y=window.scrollY+window.innerHeight*.35, cur=spy[0];
+    spy.forEach(function(s){if(s.el.offsetTop<=y)cur=s});
+    if(y>=recapEl.offsetTop)cur=null;
+    spy.forEach(function(s){s.a.classList.toggle('act',s===cur)});
+  });
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+
+/* ---------- helpers ---------- */
+function once(el,cb,th){
+  if(!('IntersectionObserver' in window)){cb();return}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){cb();io.disconnect()}});
+  },{threshold:th||.4});
+  io.observe(el);
+}
+function keepInView(el){
+  var r=el.getBoundingClientRect();
+  if(r.top<70)el.scrollIntoView({behavior:behavior,block:'start'});
+}
+
+/* ---------- particles (molecule field) ---------- */
+function particles(canvas){
+  var ctx=canvas.getContext('2d'), w=0,h=0, pts=[], raf=0, vis=!('IntersectionObserver' in window);
+  function size(){
+    var dpr=Math.min(window.devicePixelRatio||1,2), r=canvas.getBoundingClientRect();
+    w=r.width;h=r.height;
+    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(Math.min(64,Math.max(26,w*h/15000)));
+    pts=[];
+    for(var i=0;i<n;i++)pts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:1+Math.random()*2.4});
+  }
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    var max=Math.min(150,Math.max(90,w*.25)), i,j,a,b,dx,dy,d;
+    for(i=0;i<pts.length;i++){
+      a=pts[i];
+      if(!reduce){a.x+=a.vx;a.y+=a.vy}
+      if(a.x<0||a.x>w)a.vx*=-1;
+      if(a.y<0||a.y>h)a.vy*=-1;
+    }
+    for(i=0;i<pts.length;i++){
+      for(j=i+1;j<pts.length;j++){
+        a=pts[i];b=pts[j];dx=a.x-b.x;dy=a.y-b.y;d=Math.sqrt(dx*dx+dy*dy);
+        if(d<max){
+          ctx.strokeStyle='rgba(56,189,248,'+((1-d/max)*.3).toFixed(3)+')';
+          ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+        }
+      }
+    }
+    ctx.fillStyle='rgba(125,211,252,.75)';
+    for(i=0;i<pts.length;i++){ctx.beginPath();ctx.arc(pts[i].x,pts[i].y,pts[i].r,0,6.2832);ctx.fill()}
+    raf=(vis&&!reduce)?requestAnimationFrame(frame):0;
+  }
+  function start(){if(!raf&&!reduce)raf=requestAnimationFrame(frame)}
+  size();frame();
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis)start()}).observe(canvas);
+  }else{start()}
+  var t;
+  window.addEventListener('resize',function(){
+    clearTimeout(t);
+    t=setTimeout(function(){size();if(!raf)frame()},150);
+  });
+}
+$$('canvas[data-p]').forEach(particles);
+
+/* ---------- intro flow ---------- */
+once($('#flow'),function(){$('#flow').classList.add('on')},.5);
+
+/* ---------- patient factors ---------- */
+once($('#patient-grid'),function(){$('#patient-grid').classList.add('on')},.15);
+function pick(k){
+  $$('.pitem').forEach(function(x){x.classList.toggle('act',x.dataset.k===k)});
+  $$('.hot').forEach(function(x){x.classList.toggle('act',x.dataset.k===k)});
+}
+$$('.pitem').forEach(function(b){b.addEventListener('click',function(){pick(b.dataset.k)})});
+$$('.hot').forEach(function(h){h.addEventListener('click',function(){pick(h.dataset.k)})});
+
+/* ---------- food & drink ---------- */
+$$('.flip').forEach(function(b){
+  b.addEventListener('click',function(){
+    var f=b.classList.toggle('flipped');
+    b.setAttribute('aria-pressed',String(f));
+  });
+});
+
+/* ---------- drug interaction ---------- */
+var ix=$('#ix');
+function playIx(){
+  ix.classList.remove('play');
+  void ix.offsetWidth;
+  setTimeout(function(){ix.classList.add('play')},reduce?0:80);
+}
+$('#replay').addEventListener('click',playIx);
+once(ix,playIx,.5);
+
+/* ---------- administration ---------- */
+var ROUTES={
+  oral:{t:'ORAL',d:'Obat diberikan melalui mulut dan harus melewati proses penyerapan di saluran pencernaan.',p:['Mulut','Saluran pencernaan','Absorpsi','Sirkulasi sistemik']},
+  injection:{t:'INJECTION',d:'Pemberian melalui suntikan dapat memberikan obat secara lebih langsung ke jaringan atau sirkulasi, tergantung rutenya.',p:['Suntikan','Jaringan atau pembuluh darah','Sirkulasi sistemik']},
+  topical:{t:'TOPICAL',d:'Obat diberikan pada permukaan kulit untuk menghasilkan efek lokal atau, pada sediaan tertentu, dapat memberikan efek sistemik.',p:['Permukaan kulit','Lapisan kulit','Efek lokal (atau sistemik, pada sediaan tertentu)']}
+};
+function showRoute(k){
+  var r=ROUTES[k], h='', i;
+  for(i=0;i<r.p.length;i++){
+    if(i>0)h+='<span class="ra" style="--i:'+i+'" aria-hidden="true">→</span>';
+    h+='<span class="rp'+(i===r.p.length-1?' end':'')+'" style="--i:'+i+'">'+r.p[i]+'</span>';
+  }
+  $('#apanel').innerHTML='<h3>'+r.t+'</h3><p>'+r.d+'</p><div class="route">'+h+'</div>';
+  $$('.tab').forEach(function(t){t.setAttribute('aria-pressed',String(t.dataset.k===k))});
+}
+$$('.tab').forEach(function(t){t.addEventListener('click',function(){showRoute(t.dataset.k)})});
+showRoute('oral');
+
+/* ---------- drug journey ---------- */
+var ST=[
+  {n:'Administration',d:'Obat masuk ke tubuh melalui rute tertentu.',f:'Rute pemberian, waktu penggunaan'},
+  {n:'Absorption',d:'Obat masuk dari tempat pemberian menuju sirkulasi sistemik.',f:'Bentuk sediaan, makanan & minuman, rute'},
+  {n:'Distribution',d:'Obat didistribusikan ke berbagai jaringan tubuh.',f:'Usia, berat badan, kondisi penyakit'},
+  {n:'Metabolism',d:'Obat mengalami perubahan kimia, terutama melalui proses metabolisme di hati.',f:'Fungsi hati, faktor genetik, interaksi obat'},
+  {n:'Excretion',d:'Obat atau metabolitnya dikeluarkan dari tubuh, salah satunya melalui ginjal.',f:'Fungsi ginjal, usia, interaksi obat'},
+  {n:'Effect',d:'Obat mencapai target dan menghasilkan respons farmakologis.',f:'Dosis, respons individu, interaksi obat'}
+];
+var rail=$('#rail'), track=$('#track'), jd=$('#jdetail'), jplay=$('#jplay'), jcur=0, jtimer=null;
+(function(){
+  var h='';
+  ST.forEach(function(s,i){h+='<button class="st" data-i="'+i+'"><span class="c">'+(i+1)+'</span><span class="l">'+s.n+'</span></button>'});
+  rail.insertAdjacentHTML('beforeend',h);
+})();
+function setStage(i,center){
+  jcur=i;
+  rail.style.setProperty('--p',i/(ST.length-1));
+  $$('.st',rail).forEach(function(b,j){
+    b.classList.toggle('act',j===i);b.classList.toggle('done',j<i);
+    if(j===i)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');
+  });
+  var s=ST[i];
+  jd.innerHTML='<div class="jd"><h3>'+s.n+'</h3><p>'+s.d+'</p><p class="rel">Faktor terkait: '+s.f+'</p></div>';
+  if(center){
+    var b=$$('.st',rail)[i], tr=track.getBoundingClientRect(), br=b.getBoundingClientRect();
+    track.scrollTo({left:track.scrollLeft+(br.left-tr.left)-(track.clientWidth-br.width)/2,behavior:behavior});
+  }
+}
+function stopJourney(){clearInterval(jtimer);jtimer=null;jplay.textContent=jcur>=ST.length-1?'Replay journey ↻':'Play journey ▶'}
+function playJourney(){
+  if(jtimer){stopJourney();return}
+  if(jcur>=ST.length-1)setStage(0,true);
+  jplay.textContent='Pause ❚❚';
+  jtimer=setInterval(function(){
+    if(jcur>=ST.length-1){stopJourney();return}
+    setStage(jcur+1,true);
+    if(jcur>=ST.length-1)stopJourney();
+  },2200);
+}
+rail.addEventListener('click',function(e){
+  var b=e.target.closest('.st');if(!b)return;
+  stopJourney();setStage(+b.dataset.i,true);
+});
+jplay.addEventListener('click',playJourney);
+setStage(0,false);
+
+/* ---------- case lab ---------- */
+var CASES=[
+  {t:'Seorang pasien mendapatkan obat tertentu. Setelah mengonsumsi makanan tertentu, efek obat yang dirasakan mengalami perubahan.',q:'Faktor apa yang mungkin berperan?',o:['Faktor makanan','Warna obat','Bentuk kemasan','Ukuran tablet saja'],a:0,e:'Makanan tertentu dapat memengaruhi proses obat di dalam tubuh, misalnya penyerapan atau metabolismenya.'},
+  {t:'Seorang lansia dengan fungsi ginjal yang menurun meminum obat yang dikeluarkan melalui ginjal. Efek obat terasa bertahan lebih lama dari biasanya.',q:'Faktor apa yang paling mungkin berperan?',o:['Warna tablet','Fungsi organ pasien','Nama dagang obat','Ukuran kemasan'],a:1,e:'Ginjal berperan dalam ekskresi. Bila fungsinya menurun, obat atau metabolitnya dapat bertahan lebih lama di dalam tubuh.'},
+  {t:'Dua obat diminum bersamaan. Salah satunya menghambat enzim yang memetabolisme obat lainnya, sehingga efek obat kedua menjadi lebih kuat.',q:'Faktor apa yang terlibat?',o:['Rasa obat','Warna kapsul','Interaksi obat','Harga obat'],a:2,e:'Ini contoh interaksi obat: satu obat mengubah cara tubuh memproses obat lain sehingga efeknya berubah.'},
+  {t:'Obat yang sama diberikan lewat suntikan intravena dan menimbulkan efek lebih cepat dibandingkan saat diminum.',q:'Faktor apa yang menjelaskan perbedaan ini?',o:['Rasa obat','Merek obat','Ukuran botol','Cara pemberian obat'],a:3,e:'Injeksi intravena memasukkan obat langsung ke sirkulasi sehingga tidak melewati tahap absorpsi seperti pada rute oral.'}
+];
+var cbox=$('#case-box'), ci=0, cscore=0, canswered=false;
+function optsHTML(o){
+  return o.map(function(t,i){return '<button class="opt" style="--i:'+i+'" data-i="'+i+'"><span class="k">'+'ABCD'.charAt(i)+'.</span><span>'+t+'</span></button>'}).join('');
+}
+function renderCase(){
+  var c=CASES[ci], dots='';
+  canswered=false;
+  CASES.forEach(function(_,i){dots+='<i class="'+(i<ci?'done':i===ci?'act':'')+'"></i>'});
+  cbox.innerHTML='<div class="chead"><span class="cnum">CASE '+pad(ci+1)+'</span><span class="cdots" aria-hidden="true">'+dots+'</span></div>'+
+    '<p class="ctext">'+c.t+'</p><p class="cq">'+c.q+'</p><div class="opts">'+optsHTML(c.o)+'</div><div class="fb" role="status" hidden></div>';
+}
+function answerCase(i){
+  var c=CASES[ci], ok=i===c.a, fb=$('.fb',cbox), last=ci===CASES.length-1;
+  canswered=true;if(ok)cscore++;
+  $$('.opt',cbox).forEach(function(b,j){
+    b.disabled=true;
+    var mk='';
+    if(j===c.a){b.classList.add('right');mk='✓'}
+    else if(j===i){b.classList.add('wrong');mk='✗'}
+    if(mk)b.insertAdjacentHTML('beforeend','<span class="mk" aria-hidden="true">'+mk+'</span>');
+  });
+  fb.className='fb '+(ok?'good':'bad');fb.hidden=false;
+  fb.innerHTML='<strong>'+(ok?'Correct!':'Not quite.')+'</strong><p>'+(ok?'':'Jawaban yang tepat: '+c.o[c.a]+'. ')+c.e+'</p><button class="btn sm" data-act="cnext">'+(last?'See result':'Next case →')+'</button>';
+}
+function caseEnd(){
+  var msg=cscore===CASES.length?'Sharp eye! You spotted every factor.':cscore>=2?'Good work. Review the factors you missed.':'Keep exploring. Each factor tells part of the story.';
+  cbox.innerHTML='<div class="qend"><p class="qlabel">CASES SOLVED</p><p class="big">'+cscore+'<small> / '+CASES.length+'</small></p><p class="qmsg">'+msg+'</p><button class="btn" data-act="cretry">TRY AGAIN ↻</button></div>';
+}
+cbox.addEventListener('click',function(e){
+  var o=e.target.closest('.opt');
+  if(o&&!canswered){answerCase(+o.dataset.i);return}
+  var a=e.target.closest('[data-act]');if(!a)return;
+  if(a.dataset.act==='cnext'){ci++;if(ci<CASES.length)renderCase();else caseEnd();keepInView(cbox)}
+  if(a.dataset.act==='cretry'){ci=0;cscore=0;renderCase();keepInView(cbox)}
+});
+renderCase();
+
+/* ---------- quiz ---------- */
+var QZ=[
+  {q:'Manakah yang paling tepat menggambarkan faktor yang memengaruhi khasiat obat?',o:['Hanya ditentukan oleh jenis obat','Dipengaruhi obat, pasien, makanan dan minuman, interaksi, serta cara pemberian','Hanya ditentukan oleh dosis','Hanya ditentukan oleh kemasan obat'],a:1,e:'Khasiat obat dipengaruhi banyak faktor yang saling berkaitan, bukan satu faktor saja.'},
+  {q:'Tablet, kapsul, sirup, dan injeksi dapat berbeda dalam hal…',o:['Karakteristik pelepasan dan penyerapan obat','Warna label saja','Nama pabrik saja','Tanggal kedaluwarsa saja'],a:0,e:'Bentuk sediaan memengaruhi bagaimana obat dilepaskan dan diserap oleh tubuh.'},
+  {q:'Organ yang berperan besar dalam metabolisme dan ekskresi obat adalah…',o:['Paru-paru dan mata','Tulang dan otot','Hati dan ginjal','Lambung dan kulit'],a:2,e:'Hati berperan besar dalam metabolisme, sedangkan ginjal berperan besar dalam ekskresi.'},
+  {q:'Susu dan produk olahannya dapat menurunkan penyerapan obat tertentu karena…',o:['Susu mengubah warna obat','Susu mempercepat penyerapan semua obat','Susu tidak pernah memengaruhi obat','Kalsium dapat berikatan dengan obat tertentu, misalnya tetrasiklin'],a:3,e:'Kalsium dapat membentuk ikatan dengan beberapa obat sehingga penyerapannya berkurang.'},
+  {q:'Jus grapefruit dapat meningkatkan kadar beberapa obat karena menghambat…',o:['Produksi urine','Enzim CYP3A4 di usus','Denyut jantung','Pembentukan sel darah'],a:1,e:'Penghambatan CYP3A4 mengurangi metabolisme obat tertentu sehingga kadarnya dalam darah dapat meningkat.'},
+  {q:'Interaksi obat dapat menyebabkan efek obat menjadi…',o:['Selalu lebih kuat','Selalu lebih lemah','Lebih kuat, lebih lemah, atau berubah','Tidak berubah sama sekali'],a:2,e:'Interaksi dapat meningkatkan, menurunkan, atau mengubah respons tubuh terhadap obat.'},
+  {q:'Rute mana yang dapat memasukkan obat langsung ke sirkulasi darah tanpa absorpsi di saluran cerna?',o:['Injeksi intravena','Oral','Topikal','Semua rute sama saja'],a:0,e:'Injeksi intravena langsung masuk ke pembuluh darah sehingga tidak melewati tahap absorpsi.'},
+  {q:'Urutan perjalanan obat yang benar adalah…',o:['Metabolisme → Absorpsi → Distribusi → Ekskresi','Distribusi → Absorpsi → Ekskresi → Metabolisme','Ekskresi → Absorpsi → Metabolisme → Distribusi','Absorpsi → Distribusi → Metabolisme → Ekskresi'],a:3,e:'Setelah pemberian, obat diserap, didistribusikan, dimetabolisme, lalu diekskresikan.'},
+  {q:'Manakah yang termasuk faktor pasien?',o:['Warna tablet','Perbedaan genetik','Desain kemasan','Rasa sirup'],a:1,e:'Perbedaan genetik dapat menyebabkan variasi respons terhadap obat dan tergolong faktor pasien.'},
+  {q:'Kesimpulan yang paling tepat tentang khasiat obat adalah…',o:['Hanya ditentukan oleh satu faktor','Sama untuk semua orang','Dipengaruhi berbagai faktor yang saling berkaitan','Tidak dapat berubah setelah obat masuk ke tubuh'],a:2,e:'Khasiat obat tidak ditentukan oleh satu faktor saja, melainkan oleh faktor-faktor yang saling berkaitan.'}
+];
+var qbox=$('#quiz-box'), qi=0, qs=0, qanswered=false;
+function quizStart(){
+  qbox.innerHTML='<div class="qstart"><p>Jawab 10 pertanyaan tentang faktor yang memengaruhi khasiat obat. Tidak ada batas waktu.</p><button class="btn" data-act="qstart">START QUIZ</button></div>';
+}
+function quizQ(){
+  var q=QZ[qi], n=QZ.length;
+  qanswered=false;
+  qbox.innerHTML='<div class="qtop"><span class="qn">QUESTION '+pad(qi+1)+' / '+n+'</span><span class="qscore">Score <b>'+qs+'</b></span></div>'+
+    '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+n+'" aria-valuenow="'+(qi+1)+'"><i style="width:'+(qi/n*100)+'%"></i></div>'+
+    '<h3 class="qq">'+q.q+'</h3><div class="opts">'+optsHTML(q.o)+'</div><div class="fb" role="status" hidden></div>';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    var i=$('.bar i',qbox);if(i)i.style.width=((qi+1)/n*100)+'%';
+  })});
+  keepInView(qbox);
+}
+function answerQ(i){
+  var q=QZ[qi], ok=i===q.a, fb=$('.fb',qbox), last=qi===QZ.length-1;
+  qanswered=true;if(ok)qs++;
+  $$('.opt',qbox).forEach(function(b,j){
+    b.disabled=true;
+    var mk='';
+    if(j===q.a){b.classList.add('right');mk='✓'}
+    else if(j===i){b.classList.add('wrong');mk='✗'}
+    if(mk)b.insertAdjacentHTML('beforeend','<span class="mk" aria-hidden="true">'+mk+'</span>');
+  });
+  $('.qscore b',qbox).textContent=qs;
+  fb.className='fb '+(ok?'good':'bad');fb.hidden=false;
+  fb.innerHTML='<strong>'+(ok?'Correct!':'Not quite.')+'</strong><p>'+q.e+'</p><button class="btn sm" data-act="qnext">'+(last?'See score':'Next →')+'</button>';
+}
+function quizEnd(){
+  var n=QZ.length;
+  var msg=qs>=8?'Great job! Keep exploring pharmacology.':qs>=5?'Good progress! Review the factors and try again.':'Keep learning. Every expert started here.';
+  qbox.innerHTML='<div class="qend"><p class="qlabel">YOUR SCORE</p><p class="big"><span id="count">0</span><small> / '+n+'</small></p><p class="qmsg">'+msg+'</p><button class="btn" data-act="qretry">TRY AGAIN ↻</button></div>';
+  var el=$('#count'), t0=null, dur=reduce?1:900;
+  function step(ts){
+    if(t0===null)t0=ts;
+    var p=Math.min((ts-t0)/dur,1);
+    el.textContent=Math.round(qs*(1-Math.pow(1-p,3)));
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+  keepInView(qbox);
+}
+qbox.addEventListener('click',function(e){
+  var o=e.target.closest('.opt');
+  if(o&&!qanswered){answerQ(+o.dataset.i);return}
+  var a=e.target.closest('[data-act]');if(!a)return;
+  var k=a.dataset.act;
+  if(k==='qstart'||k==='qretry'){qi=0;qs=0;quizQ()}
+  else if(k==='qnext'){qi++;if(qi<QZ.length)quizQ();else quizEnd()}
+});
+quizStart();
+
+})();
+</script>
+</body>
+</html>
