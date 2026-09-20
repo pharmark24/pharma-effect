@@ -309,6 +309,29 @@ a{color:inherit}
 .sign span{display:block;margin-top:4px;font-size:.88rem;color:var(--soft)}
 .disc{margin-top:22px;font-size:.78rem;color:var(--soft);opacity:.8}
 
+/* ---------- references links ---------- */
+.rg a{color:var(--blue);overflow-wrap:anywhere}
+.rg li>span:last-child{min-width:0}
+
+/* ---------- sound ---------- */
+.tap-hint{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));font-size:.82rem;color:var(--soft);animation:rise .9s 2.7s backwards;transition:opacity .4s}
+.tap-hint.gone{opacity:0;pointer-events:none}
+.snd{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.snd-fab{width:50px;height:50px;border-radius:50%;border:1px solid rgba(248,250,252,.18);background:rgba(16,42,67,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--white);display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 26px -8px rgba(16,42,67,.65);transition:transform .2s}
+.snd-fab:hover{transform:scale(1.07)}
+.snd-fab svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.snd-fab .slash{display:none}
+.snd.muted .snd-fab .waves{display:none}
+.snd.muted .snd-fab .slash{display:block}
+.snd-panel{min-width:214px;padding:8px;border-radius:20px;background:rgba(16,42,67,.96);border:1px solid rgba(248,250,252,.12);color:var(--white);box-shadow:0 18px 40px -14px rgba(0,0,0,.55)}
+.snd-panel[hidden]{display:none}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:12px;border:0;border-radius:14px;background:none;cursor:pointer;text-align:left;font:500 .9rem var(--font-body);color:inherit}
+.sw:hover{background:rgba(248,250,252,.07)}
+.sw i{position:relative;flex:none;width:42px;height:24px;border-radius:99px;background:rgba(248,250,252,.24);transition:background .2s}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw[aria-checked="true"] i{background:var(--blue)}
+.sw[aria-checked="true"] i::after{transform:translateX(18px)}
+
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
@@ -345,6 +368,7 @@ a{color:inherit}
     <p class="quote">“Obat yang sama belum tentu memberikan efek yang sama pada setiap orang.”</p>
     <a class="btn" href="#intro">EXPLORE PHARMA EFFECT <span aria-hidden="true">→</span></a>
   </div>
+  <p class="tap-hint" id="tap-hint">🔊 Ketuk layar untuk menyalakan musik</p>
 </section>
 
 <!-- ============ 02 INTRODUCTION ============ -->
@@ -548,24 +572,27 @@ a{color:inherit}
 </section>
 
 <!-- ============ 13 REFERENCES ============ -->
-<!-- CATATAN: ganti isi daftar ini dengan sumber yang benar-benar kalian pakai. -->
+<!-- Sumber di bawah sudah dicek keberadaannya. Baca/buka sendiri sebelum dikutip di tugas. -->
 <section id="refs" class="sec mist">
   <div class="wrap">
     <h2 class="h2">LEARN MORE</h2>
     <div class="refs">
       <div class="rg"><h3>BOOKS</h3><ul>
-        <li><span>📖</span><span>Katzung BG. [tahun edisi]. <em>Basic &amp; Clinical Pharmacology</em>. McGraw-Hill.</span></li>
-        <li><span>📖</span><span>Brunton LL, Knollmann BC. [tahun edisi]. <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>. McGraw-Hill.</span></li>
-        <li><span>📖</span><span>Rang HP, Ritter JM, Flower RJ, Henderson G. [tahun edisi]. <em>Rang &amp; Dale's Pharmacology</em>. Elsevier.</span></li>
+        <li><span>📖</span><span>Vanderah TW (ed.). 2024. <em>Katzung's Basic &amp; Clinical Pharmacology</em>. Edisi ke-16. McGraw-Hill.</span></li>
+        <li><span>📖</span><span>Brunton LL, Knollmann BC (eds.). 2023. <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>. Edisi ke-14. McGraw-Hill.</span></li>
+        <li><span>📖</span><span>Ritter JM, Flower RJ, Henderson G, Loke YK, MacEwan D, Robinson E, Fullerton J. 2024. <em>Rang &amp; Dale's Pharmacology</em>. Edisi ke-10. Elsevier.</span></li>
       </ul></div>
       <div class="rg"><h3>JOURNALS</h3><ul>
-        <li><span>📄</span><span>[Nama penulis]. [Tahun]. [Judul artikel]. <em>[Nama jurnal]</em>.</span></li>
-        <li><span>📄</span><span>[Nama penulis]. [Tahun]. [Judul artikel]. <em>[Nama jurnal]</em>.</span></li>
+        <li><span>📄</span><span>Bailey DG, Dresser G, Arnold JMO. 2013. Grapefruit–medication interactions: forbidden fruit or avoidable consequences? <em>CMAJ</em> 185(4):309–316. <a href="https://doi.org/10.1503/cmaj.120951" target="_blank" rel="noopener">doi:10.1503/cmaj.120951</a></span></li>
+        <li><span>📄</span><span>Schmidt LE, Dalhoff K. 2002. Food-drug interactions. <em>Drugs</em> 62(10):1481–1502. <a href="https://www.springermedicine.com/food-drug-interactions/25023276" target="_blank" rel="noopener">Abstrak</a></span></li>
+        <li><span>📄</span><span>Carrillo JA, Benitez J. 2000. Clinically significant pharmacokinetic interactions between dietary caffeine and medications. <em>Clin Pharmacokinet</em> 39(2):127–153. <a href="https://doi.org/10.2165/00003088-200039020-00004" target="_blank" rel="noopener">doi:10.2165/00003088-200039020-00004</a></span></li>
+        <li><span>📄</span><span>Mangoni AA, Jackson SHD. 2004. Age-related changes in pharmacokinetics and pharmacodynamics: basic principles and practical applications. <em>Br J Clin Pharmacol</em> 57(1):6–14. <a href="https://doi.org/10.1046/j.1365-2125.2003.02007.x" target="_blank" rel="noopener">doi:10.1046/j.1365-2125.2003.02007.x</a></span></li>
+        <li><span>📄</span><span>Zanger UM, Schwab M. 2013. Cytochrome P450 enzymes in drug metabolism: regulation of gene expression, enzyme activities, and impact of genetic variation. <em>Pharmacol Ther</em> 138(1):103–141. <a href="https://doi.org/10.1016/j.pharmthera.2012.12.007" target="_blank" rel="noopener">doi:10.1016/j.pharmthera.2012.12.007</a></span></li>
       </ul></div>
       <div class="rg"><h3>OFFICIAL SOURCES</h3><ul>
-        <li><span>🌐</span><span>World Health Organization (WHO).</span></li>
-        <li><span>🌐</span><span>Badan Pengawas Obat dan Makanan (BPOM) RI.</span></li>
-        <li><span>🌐</span><span>Kementerian Kesehatan Republik Indonesia.</span></li>
+        <li><span>🌐</span><span>U.S. Food and Drug Administration (FDA). <em>Grapefruit Juice and Some Drugs Don't Mix</em>. <a href="https://www.fda.gov/consumers/consumer-updates/grapefruit-juice-and-some-drugs-dont-mix" target="_blank" rel="noopener">fda.gov</a></span></li>
+        <li><span>🌐</span><span>Kementerian Kesehatan RI. 2023. <em>Interaksi Obat dengan Makanan</em>. <a href="https://keslan.kemkes.go.id/view_artikel/2156/interaksi-obat-dengan-makanan" target="_blank" rel="noopener">keslan.kemkes.go.id</a></span></li>
+        <li><span>🌐</span><span>World Health Organization (WHO). <em>Promoting rational use of medicines</em>. <a href="https://www.who.int/activities/promoting-rational-use-of-medicines" target="_blank" rel="noopener">who.int</a></span></li>
       </ul></div>
     </div>
   </div>
@@ -585,6 +612,16 @@ a{color:inherit}
 </section>
 
 </main>
+
+<div class="snd" id="snd">
+  <div class="snd-panel" id="snd-panel" hidden>
+    <button class="sw" id="sw-music" role="switch" aria-checked="true"><span>Musik latar</span><i></i></button>
+    <button class="sw" id="sw-sfx" role="switch" aria-checked="true"><span>Efek suara</span><i></i></button>
+  </div>
+  <button class="snd-fab" id="snd-fab" aria-label="Pengaturan suara" aria-expanded="false" aria-controls="snd-panel">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/><g class="waves"><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18 6.5a8 8 0 0 1 0 11"/></g><path class="slash" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+  </button>
+</div>
 
 <script>
 (function(){
@@ -631,6 +668,201 @@ function keepInView(el){
   var r=el.getBoundingClientRect();
   if(r.top<70)el.scrollIntoView({behavior:behavior,block:'start'});
 }
+
+/* ---------- audio: musik latar + efek suara (Web Audio, tanpa file) ---------- */
+var Snd=(function(){
+  var AC=window.AudioContext||window.webkitAudioContext;
+  var S={ctx:null,master:null,musicOut:null,sfxOut:null,delayIn:null,noise:null,sess:null,timer:0,nextChord:0,nextNote:0,chord:0,last:-1,music:true,sfx:true,unlocked:false,hidden:false};
+  var CHORD_LEN=6.9, STEP=.43;
+  var CH=[[130.81,196.00,246.94,329.63],[110.00,164.81,196.00,261.63],[87.31,130.81,220.00,261.63],[98.00,146.83,196.00,246.94]];
+  var PENT=[523.25,587.33,659.25,783.99,880.00,1046.50,1174.66,1318.51];
+  try{
+    if(localStorage.getItem('pe-music')==='0')S.music=false;
+    if(localStorage.getItem('pe-sfx')==='0')S.sfx=false;
+  }catch(e){}
+  function save(){try{localStorage.setItem('pe-music',S.music?'1':'0');localStorage.setItem('pe-sfx',S.sfx?'1':'0')}catch(e){}}
+
+  function init(){
+    if(S.ctx)return true;
+    if(!AC)return false;
+    var c=S.ctx=new AC(), i;
+    var comp=c.createDynamicsCompressor();
+    comp.threshold.value=-14;comp.knee.value=20;comp.ratio.value=4;comp.attack.value=.01;comp.release.value=.25;
+    S.master=c.createGain();S.master.gain.value=.9;
+    S.master.connect(comp);comp.connect(c.destination);
+    S.musicOut=c.createGain();S.musicOut.gain.value=.5;S.musicOut.connect(S.master);
+    S.sfxOut=c.createGain();S.sfxOut.gain.value=.7;S.sfxOut.connect(S.master);
+    var d=c.createDelay(1.5);d.delayTime.value=.42;
+    var fb=c.createGain();fb.gain.value=.38;
+    var lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2400;
+    var wet=c.createGain();wet.gain.value=.5;
+    S.delayIn=c.createGain();S.delayIn.gain.value=.4;
+    S.delayIn.connect(d);d.connect(lp);lp.connect(fb);fb.connect(d);lp.connect(wet);wet.connect(S.musicOut);
+    var len=c.sampleRate, buf=c.createBuffer(1,len,c.sampleRate), ch=buf.getChannelData(0);
+    for(i=0;i<len;i++)ch[i]=Math.random()*2-1;
+    S.noise=buf;
+    return true;
+  }
+  function tone(f,t,dur,type,vol,dest,to){
+    var c=S.ctx,o=c.createOscillator(),g=c.createGain();
+    o.type=type||'sine';
+    o.frequency.setValueAtTime(f,t);
+    if(to)o.frequency.exponentialRampToValueAtTime(to,t+dur);
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+.012);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g);g.connect(dest);
+    o.start(t);o.stop(t+dur+.05);
+  }
+  function whoosh(t,dur,f0,f1,vol){
+    var c=S.ctx,src=c.createBufferSource(),bp=c.createBiquadFilter(),g=c.createGain();
+    src.buffer=S.noise;src.loop=true;
+    bp.type='bandpass';bp.Q.value=1.1;
+    bp.frequency.setValueAtTime(f0,t);bp.frequency.exponentialRampToValueAtTime(f1,t+dur);
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+dur*.45);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    src.connect(bp);bp.connect(g);g.connect(S.sfxOut);
+    src.start(t);src.stop(t+dur+.05);
+  }
+
+  /* --- musik --- */
+  function pad(t,ci){
+    var c=S.ctx, notes=CH[ci].concat([CH[ci][0]/2]), dur=CHORD_LEN+2.6;
+    var lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1100;lp.Q.value=.3;
+    var g=c.createGain();
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.linearRampToValueAtTime(.085,t+2.2);
+    g.gain.setValueAtTime(.085,t+CHORD_LEN-.2);
+    g.gain.linearRampToValueAtTime(.0001,t+dur);
+    lp.connect(g);g.connect(S.sess);
+    notes.forEach(function(f,i){
+      [['sine',0,.5],['triangle',5,.2]].forEach(function(o){
+        var osc=c.createOscillator(),og=c.createGain();
+        osc.type=o[0];osc.frequency.value=f;osc.detune.value=o[1]*(i%2?1:-1);
+        og.gain.value=o[2];
+        osc.connect(og);og.connect(lp);
+        osc.start(t);osc.stop(t+dur+.1);
+      });
+    });
+  }
+  function pluck(t){
+    var i=S.last<0?2:Math.max(0,Math.min(PENT.length-1,S.last+Math.round((Math.random()-.5)*4)));
+    if(i===S.last)i=(i+1)%PENT.length;
+    S.last=i;
+    var f=PENT[i];
+    tone(f,t,1.8,'sine',.06,S.sess);
+    tone(f*2,t,.7,'sine',.012,S.sess);
+  }
+  function schedule(){
+    var c=S.ctx;if(!c||!S.sess)return;
+    var ahead=c.currentTime+1.8;
+    while(S.nextChord<ahead){pad(S.nextChord,S.chord%4);S.nextChord+=CHORD_LEN;S.chord++}
+    while(S.nextNote<ahead){if(Math.random()<.42)pluck(S.nextNote);S.nextNote+=STEP}
+  }
+  function startMusic(){
+    if(!S.ctx||S.sess)return;
+    var c=S.ctx,s=c.createGain();
+    s.gain.setValueAtTime(0,c.currentTime);
+    s.gain.linearRampToValueAtTime(1,c.currentTime+2.5);
+    s.connect(S.musicOut);s.connect(S.delayIn);
+    S.sess=s;S.nextChord=c.currentTime+.15;S.nextNote=S.nextChord+1.6;S.chord=0;
+    schedule();
+    S.timer=setInterval(schedule,250);
+  }
+  function stopMusic(){
+    if(!S.sess)return;
+    var c=S.ctx,s=S.sess;S.sess=null;
+    clearInterval(S.timer);S.timer=0;
+    s.gain.cancelScheduledValues(c.currentTime);
+    s.gain.setValueAtTime(s.gain.value,c.currentTime);
+    s.gain.linearRampToValueAtTime(0,c.currentTime+.6);
+    setTimeout(function(){try{s.disconnect()}catch(e){}},900);
+  }
+
+  /* --- kontrol --- */
+  function unlock(){
+    if(!init())return;
+    if(S.ctx.state==='suspended'&&!S.hidden&&S.ctx.resume){
+      var p=S.ctx.resume();if(p&&p.catch)p.catch(function(){});
+    }
+    if(!S.unlocked){
+      S.unlocked=true;
+      var h=document.getElementById('tap-hint');if(h)h.classList.add('gone');
+      if(S.music)startMusic();
+    }
+  }
+  function setMusic(on){S.music=on;save();if(on){if(S.unlocked)startMusic()}else stopMusic()}
+  function setSfx(on){S.sfx=on;save()}
+
+  /* --- efek suara --- */
+  function play(name,arg){
+    if(!S.sfx||!S.ctx||S.hidden)return;
+    var c=S.ctx,t=c.currentTime+.005,d=S.sfxOut;
+    switch(name){
+      case 'tap':tone(760,t,.09,'sine',.22,d,520);break;
+      case 'soft':tone(520,t,.08,'sine',.16,d,420);break;
+      case 'open':tone(440,t,.12,'sine',.18,d);tone(660,t+.06,.14,'sine',.16,d);break;
+      case 'sparkle':[784,988,1319].forEach(function(f,i){tone(f,t+i*.07,.35,'sine',.18,d)});break;
+      case 'flip':whoosh(t,.32,500,2200,.22);tone(330,t+.28,.12,'triangle',.12,d);break;
+      case 'bell':tone(880,t,.7,'sine',.2,d);tone(1320,t,.5,'sine',.08,d);break;
+      case 'tab':tone(600,t,.07,'square',.05,d,900);tone(900,t+.05,.09,'sine',.14,d);break;
+      case 'step':var f=392*Math.pow(2,(arg||0)/6);tone(f,t,.5,'sine',.2,d);tone(f*1.5,t+.05,.4,'sine',.08,d);break;
+      case 'correct':[523.25,659.25,783.99].forEach(function(f,i){tone(f,t+i*.09,.4,'triangle',.2,d)});tone(1046.5,t+.27,.5,'sine',.1,d);break;
+      case 'wrong':tone(230,t,.32,'triangle',.13,d,150);tone(174,t+.1,.3,'sine',.14,d,120);break;
+      case 'whoosh':whoosh(t,1.3,300,2600,.2);break;
+      case 'boom':tone(180,t,.6,'sine',.32,d,60);[880,1319,1760].forEach(function(f,i){tone(f,t+.03*i,.9,'sine',.1,d)});break;
+      case 'result':
+        if(arg>=2){[523.25,659.25,783.99,1046.5,1318.5].forEach(function(f,i){tone(f,t+i*.11,.6,'triangle',.2,d)})}
+        else if(arg===1){[523.25,659.25,783.99].forEach(function(f,i){tone(f,t+i*.13,.5,'triangle',.18,d)})}
+        else{tone(392,t,.4,'sine',.18,d);tone(523.25,t+.2,.6,'sine',.18,d)}
+        break;
+    }
+  }
+
+  document.addEventListener('visibilitychange',function(){
+    if(!S.ctx)return;
+    if(document.hidden){S.hidden=true;if(S.ctx.suspend)S.ctx.suspend()}
+    else{S.hidden=false;if(S.ctx.resume)S.ctx.resume()}
+  });
+  return {play:play,unlock:unlock,setMusic:setMusic,setSfx:setSfx,get:function(){return S}};
+})();
+
+['pointerup','touchend','click','keydown'].forEach(function(ev){
+  document.addEventListener(ev,function(){Snd.unlock()},{capture:true,passive:true});
+});
+
+/* panel suara */
+var snd=$('#snd'), sndFab=$('#snd-fab'), sndPanel=$('#snd-panel'), swM=$('#sw-music'), swS=$('#sw-sfx');
+function syncSnd(){
+  var st=Snd.get();
+  swM.setAttribute('aria-checked',String(st.music));
+  swS.setAttribute('aria-checked',String(st.sfx));
+  snd.classList.toggle('muted',!st.music&&!st.sfx);
+}
+sndFab.addEventListener('click',function(){
+  var open=sndPanel.hidden;
+  sndPanel.hidden=!open;
+  sndFab.setAttribute('aria-expanded',String(open));
+});
+swM.addEventListener('click',function(){Snd.setMusic(!Snd.get().music);syncSnd();Snd.play('soft')});
+swS.addEventListener('click',function(){var on=!Snd.get().sfx;Snd.setSfx(on);syncSnd();if(on)Snd.play('soft')});
+document.addEventListener('click',function(e){
+  if(!sndPanel.hidden&&!e.target.closest('#snd')){sndPanel.hidden=true;sndFab.setAttribute('aria-expanded','false')}
+});
+syncSnd();
+
+/* efek suara saat elemen ditekan */
+document.addEventListener('click',function(e){
+  var t=e.target;
+  if(t.closest('#snd')||t.closest('.opt')||t.closest('.st'))return;
+  if(t.closest('.flip'))Snd.play('flip');
+  else if(t.closest('.pitem')||t.closest('.hot'))Snd.play('bell');
+  else if(t.closest('.tab'))Snd.play('tab');
+  else if(t.closest('.hero .btn'))Snd.play('sparkle');
+  else if(t.closest('.burger'))Snd.play('open');
+  else if(t.closest('.fcard,.btn,.links a,.brand'))Snd.play('tap');
+});
 
 /* ---------- particles (molecule field) ---------- */
 function particles(canvas){
@@ -704,7 +936,8 @@ var ix=$('#ix');
 function playIx(){
   ix.classList.remove('play');
   void ix.offsetWidth;
-  setTimeout(function(){ix.classList.add('play')},reduce?0:80);
+  setTimeout(function(){ix.classList.add('play');Snd.play('whoosh')},reduce?0:80);
+  setTimeout(function(){Snd.play('boom')},1400);
 }
 $('#replay').addEventListener('click',playIx);
 once(ix,playIx,.5);
@@ -742,8 +975,9 @@ var rail=$('#rail'), track=$('#track'), jd=$('#jdetail'), jplay=$('#jplay'), jcu
   ST.forEach(function(s,i){h+='<button class="st" data-i="'+i+'"><span class="c">'+(i+1)+'</span><span class="l">'+s.n+'</span></button>'});
   rail.insertAdjacentHTML('beforeend',h);
 })();
-function setStage(i,center){
+function setStage(i,center,quiet){
   jcur=i;
+  if(!quiet)Snd.play('step',i);
   rail.style.setProperty('--p',i/(ST.length-1));
   $$('.st',rail).forEach(function(b,j){
     b.classList.toggle('act',j===i);b.classList.toggle('done',j<i);
@@ -772,7 +1006,7 @@ rail.addEventListener('click',function(e){
   stopJourney();setStage(+b.dataset.i,true);
 });
 jplay.addEventListener('click',playJourney);
-setStage(0,false);
+setStage(0,false,true);
 
 /* ---------- case lab ---------- */
 var CASES=[
@@ -795,6 +1029,7 @@ function renderCase(){
 function answerCase(i){
   var c=CASES[ci], ok=i===c.a, fb=$('.fb',cbox), last=ci===CASES.length-1;
   canswered=true;if(ok)cscore++;
+  Snd.play(ok?'correct':'wrong');
   $$('.opt',cbox).forEach(function(b,j){
     b.disabled=true;
     var mk='';
@@ -806,6 +1041,7 @@ function answerCase(i){
   fb.innerHTML='<strong>'+(ok?'Correct!':'Not quite.')+'</strong><p>'+(ok?'':'Jawaban yang tepat: '+c.o[c.a]+'. ')+c.e+'</p><button class="btn sm" data-act="cnext">'+(last?'See result':'Next case →')+'</button>';
 }
 function caseEnd(){
+  Snd.play('result',cscore===CASES.length?2:cscore>=2?1:0);
   var msg=cscore===CASES.length?'Sharp eye! You spotted every factor.':cscore>=2?'Good work. Review the factors you missed.':'Keep exploring. Each factor tells part of the story.';
   cbox.innerHTML='<div class="qend"><p class="qlabel">CASES SOLVED</p><p class="big">'+cscore+'<small> / '+CASES.length+'</small></p><p class="qmsg">'+msg+'</p><button class="btn" data-act="cretry">TRY AGAIN ↻</button></div>';
 }
@@ -849,6 +1085,7 @@ function quizQ(){
 function answerQ(i){
   var q=QZ[qi], ok=i===q.a, fb=$('.fb',qbox), last=qi===QZ.length-1;
   qanswered=true;if(ok)qs++;
+  Snd.play(ok?'correct':'wrong');
   $$('.opt',qbox).forEach(function(b,j){
     b.disabled=true;
     var mk='';
@@ -862,6 +1099,7 @@ function answerQ(i){
 }
 function quizEnd(){
   var n=QZ.length;
+  Snd.play('result',qs>=8?2:qs>=5?1:0);
   var msg=qs>=8?'Great job! Keep exploring pharmacology.':qs>=5?'Good progress! Review the factors and try again.':'Keep learning. Every expert started here.';
   qbox.innerHTML='<div class="qend"><p class="qlabel">YOUR SCORE</p><p class="big"><span id="count">0</span><small> / '+n+'</small></p><p class="qmsg">'+msg+'</p><button class="btn" data-act="qretry">TRY AGAIN ↻</button></div>';
   var el=$('#count'), t0=null, dur=reduce?1:900;
